@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Cookies from 'js-cookie' 
 
-const login = (username, password) => {
-    axios.post("http://localhost:5000/users/login", {
+const login = (username, password, email) => {
+    axios.post("http://localhost:5000/users/register", {
         username:username,
-        password:password
+        password:password,
+        email: email
     }).then(res => {
         Cookies.set('jwt', res.data.token)
         window.location = '/feed'
@@ -18,9 +19,10 @@ const login = (username, password) => {
 }
 
 
-export const Login = () => {
+export const Register = () => {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
+    const [email,setEmail] = useState("");
 
     return (
         <>
@@ -32,12 +34,14 @@ export const Login = () => {
                         <Spacer y={.5} />
                         {/* rednere dinamico type = password per visualizzare la password inserita */}
                         <Input label="Password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+                        <Spacer y={.5} />
+                        <Input label="Email" type="text" value={email} onChange={(e)=>setEmail(e.target.value)} />
                         <br />
                         <Spacer y={.5} />
-                        <Button onClick={()=>login(username,password)}>Login</Button>
+                        <Button onClick={()=>login(username,password, email)}>Register</Button>
                         <Spacer y={.5} />
-                        <Link to="register">
-                            <Button>Register</Button>
+                        <Link to="login">
+                            <Button>login</Button>
                         </Link>
                     </center>
                 </Card>

@@ -1,7 +1,6 @@
 var User = require('../models/User');
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -14,9 +13,7 @@ require('dotenv').config();
     POST api/users/editProfile -> Modificare il profio dell'utente -> NO EMAIL e createdAt
 */
 
-router.post(("/register"), (req, res) => {
-    //req.body -> body -> body.username , body.password , body.email
-    console.log(req)
+router.post("/register", (req, res) => {
     // 1)- bisogna controllare se esiste o no un utente con la stessa email oppure username
     User.find({ email: req.body.email }).then(doc => {
         if (doc.length > 0) {
@@ -26,7 +23,6 @@ router.post(("/register"), (req, res) => {
                 if (doc1.length > 0) {
                     res.status(402).send({ message: "username already in use!" });
                 } else {
-                    console.log(req.body.password)
                     bcrypt.hash(req.body.password, 10, (err, pwd) => {
                         if (err) {
                             console.log(err)
@@ -58,12 +54,11 @@ router.post(("/register"), (req, res) => {
     })
 })
 
-router.get("/:username",(req,res)=>{
+router.get("/user/:username",(req,res)=>{
     User.findOne({ username: req.params.username}, (err,doc)=>{
         if (err){
             res.status(500).json({ message: "Error has occured"});
         }else if(!doc){
-            console.log(doc);
             res.status(404).send({message:"User not found"});
         } else {
             const { username,  email, createdAt} =  doc
@@ -79,6 +74,7 @@ router.post('/login', (req, res) => {
         if(err) 
             return res.status(500).json({ message: "Error has occured"})
 
+        // console.log(user)
         if(!user)
             return res.status(404).json({ message: "user not found"})
 
