@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000
 app.use(helmet());
 app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/todolist', {useNewUrlParser: true,useFindAndModify:false,useCreateIndex:true,useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://valdozzz:'+process.env.DB_PSW+'@trumper.0bmjo.mongodb.net/trumper', {useNewUrlParser: true,useFindAndModify:false,useCreateIndex:true,useUnifiedTopology: true});
 
 app.get('/', function (req, res) {
     res.send('hello world')
