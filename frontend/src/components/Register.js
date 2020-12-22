@@ -11,6 +11,7 @@ const login = (username, password, email) => {
         email: email
     }).then(res => {
         Cookies.set('jwt', res.data.token)
+        Cookies.set('id',res.data.id)
         window.location = '/feed'
     }).catch(err => {
         alert(err);

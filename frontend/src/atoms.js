@@ -4,6 +4,7 @@ export const userAtom = atom({
     key:"adminAtom",
     default:{
         isAuth:false,
-        jwt:null
+        jwt:null,
+        id:null
     }
 })

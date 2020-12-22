@@ -15,12 +15,12 @@ function App() {
 	useEffect(async () => {
 		const auth = async () => {
 			const jwt = Cookies.get('jwt')
-	
-			if(jwt) {
-				setUser({jwt:jwt, isAuth:true})
+			const id = Cookies.get("id");
+			if(jwt && id) {
+				setUser({jwt:jwt, isAuth:true,id:id})
 				setLoading(false)
 			} else {
-				setUser({jwt: null, isAuth: false})
+				setUser({jwt: null, isAuth: false,id:null})
 				setLoading(false)
 			}
 		}
@@ -43,7 +43,7 @@ function App() {
 					{ user.isAuth ? <Redirect to="/feed"/> : <Register/> }
 				</Route>
 				<Route exact path="/feed">
-					<Feed/>
+				{ user.isAuth ? <Feed/>: <Redirect to="/login"/>  }
 				</Route>
 			</Switch>
 		</Router>

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const users = require('./api/users');
+const quotes = require('./api/quotes')
 const app = express();
 const cors = require('cors')
 var corsOptions = {
@@ -20,6 +21,7 @@ app.get('/', function (req, res) {
     res.send('hello world')
   })
 
-app.use('/users', users);
+  app.use('/users', users);
+  app.use('/quotes', quotes);
 
 app.listen(5000, () => console.log(`Server started on port 5000`))
